@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoHuella - Perfil</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #34d399;
+            --secondary-color: #047857;
+            --background-color: #ecfdf5;
+            --card-bg: #ffffff;
+            --text-color: #1f2937;
+            --gradient-start: #34d399;
+            --gradient-end: #059669;
+            --accent-color: #f59e0b;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, var(--background-color), #f0fdf4);
+            padding-bottom: 70px;
+            color: var(--text-color);
+        }
+
+        .top-nav {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+        }
+
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 -2px 15px rgba(0,0,0,0.05);
+            z-index: 1000;
+        }
+
+        .nav-link {
+            color: var(--text-color);
+            padding: 10px;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link i {
+            font-size: 1.2rem;
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .nav-link.active {
+            color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .profile-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            padding: 20px;
+            text-align: center;
+        }
+
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 15px;
+        }
+
+        .profile-stats {
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            color: white;
+            border-radius: 20px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .profile-stats-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px 0;
+        }
+
+        .profile-stats-item i {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+
+        .profile-settings {
+            background: var(--card-bg);
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            padding: 20px;
+        }
+
+        .profile-settings-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .profile-settings-item:last-child {
+            border-bottom: none;
+        }
+
+        .profile-settings-item i {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar Superior -->
+    <nav class="navbar top-nav">
+        <div class="container">
+            <span class="navbar-brand">
+                <i class="fas fa-leaf"></i> EcoHuella
+            </span>
+            <div>
+                <i class="fas fa-bell position-relative">
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                        2
+                    </span>
+                </i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenido Principal -->
+    <div class="container mt-4">
+        <!-- Perfil de Usuario -->
+        <div class="profile-card">
+            <img src="https://via.placeholder.com/100" alt="Avatar" class="profile-avatar">
+            <h5>Aylin Simaliza</h5>
+            <p class="text-muted">aylin@example.com</p>
+        </div>
+
+        <!-- Estadísticas de Usuario -->
+        <div class="profile-stats">
+            <div class="row">
+                <div class="col-4 profile-stats-item">
+                    <i class="fas fa-chart-line"></i>
+                    <span class="font-bold">2.4 tonCO₂e</span>
+                    <small class="text-muted">Tu Huella</small>
+                </div>
+                <div class="col-4 profile-stats-item">
+                    <i class="fas fa-leaf"></i>
+                    <span class="font-bold">12</span>
+                    <small class="text-muted">Retos</small>
+                </div>
+                <div class="col-4 profile-stats-item">
+                    <i class="fas fa-trophy"></i>
+                    <span class="font-bold">5</span>
+                    <small class="text-muted">Logros</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Configuración de Perfil -->
+        <div class="profile-settings mb-3">
+            <div class="profile-settings-item">
+                <span>Editar Perfil</span>
+                <i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="profile-settings-item">
+                <span>Configuración de Privacidad</span>
+                <i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="profile-settings-item">
+                <span>Notificaciones</span>
+                <i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="profile-settings-item">
+                <span>Cambiar Contraseña</span>
+                <i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="profile-settings-item">
+                <span>Cerrar Sesión</span>
+                <i class="fas fa-chevron-right"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navegación Inferior -->
+    <nav class="bottom-nav">
+        <div class="container">
+            <div class="row py-2">
+                <div class="col nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="fas fa-home"></i>
+                        Inicio
+                    </a>
+                </div>
+                <div class="col nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="fas fa-chart-bar"></i>
+                        Estadísticas
+                    </a>
+                </div>
+                <div class="col nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="fas fa-leaf"></i>
+                        Retos
+                    </a>
+                </div>
+                <div class="col nav-item">
+                    <a class="nav-link active" href="#">
+                        <i class="fas fa-user"></i>
+                        Perfil
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
