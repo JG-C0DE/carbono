@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoHuella - Calculadora de Carbono</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #34d399;
+            --secondary-color: #047857;
+            --background-color: #ecfdf5;
+            --card-bg: #ffffff;
+            --text-color: #1f2937;
+            --gradient-start: #34d399;
+            --gradient-end: #059669;
+            --accent-color: #f59e0b;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, var(--background-color), #f0fdf4);
+            padding-bottom: 70px;
+            color: var(--text-color);
+        }
+
+        .navbar-brand {
+            background: linear-gradient(45deg, var(--gradient-start), var(--gradient-end));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: bold;
+        }
+
+        .top-nav {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+        }
+
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 -2px 15px rgba(0,0,0,0.05);
+            z-index: 1000;
+        }
+
+        .nav-link {
+            color: var(--text-color);
+            padding: 10px;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link i {
+            font-size: 1.2rem;
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .nav-link.active {
+            color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .card {
+            border-radius: 20px;
+            border: none;
+            background: var(--card-bg);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+        }
+
+        .main-card {
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            color: white;
+        }
+
+        .progress {
+            height: 12px;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .progress-bar {
+            background: var(--accent-color);
+        }
+
+        .eco-tip {
+            background: linear-gradient(135deg, #ffffff, #f8fafc);
+            border-left: 4px solid var(--accent-color);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .category-icon {
+            font-size: 2rem;
+            background: linear-gradient(45deg, var(--gradient-start), var(--gradient-end));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .rewards-section {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            border-radius: 20px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .reward-progress {
+            background: rgba(255, 255, 255, 0.5);
+            height: 25px;
+            border-radius: 12.5px;
+            margin: 15px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .reward-progress-bar {
+            background: linear-gradient(45deg, #f59e0b, #d97706);
+            height: 100%;
+            border-radius: 12.5px;
+            transition: width 0.3s ease;
+        }
+
+        .reward-icon {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #fff;
+            z-index: 2;
+        }
+
+        .floating-button {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            color: white;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(52, 211, 153, 0.4);
+            z-index: 999;
+            transition: transform 0.3s ease;
+        }
+
+        .floating-button:hover {
+            transform: scale(1.1);
+        }
+
+        .animate-fade {
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar Superior -->
+    <nav class="navbar top-nav">
+        <div class="container">
+            <span class="navbar-brand">
+                <i class="fas fa-leaf"></i> EcoHuella
+            </span>
+            <div>
+                <i class="fas fa-bell position-relative">
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                        2
+                    </span>
+                </i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenido Principal -->
+    <div class="container mt-4">
+        <!-- Resumen de Huella de Carbono -->
+        <div class="card main-card animate-fade">
+            <div class="card-body p-4">
+                <h5 class="mb-3">Tu Huella de Carbono</h5>
+                <h2 class="mb-3">2.4 tonCO₂e</h2>
+                <div class="progress mb-3">
+                    <div class="progress-bar" style="width: 65%"></div>
+                </div>
+                <p class="mb-0">
+                    <i class="fas fa-arrow-down text-white"></i>
+                    15% menos que el mes anterior
+                </p>
+            </div>
+        </div>
+
+        <!-- Categorías -->
+        <h5 class="mt-4 mb-3">Categorías de Consumo</h5>
+        <div class="row g-3">
+            <div class="col-6">
+                <div class="card animate-fade">
+                    <div class="card-body text-center p-3">
+                        <i class="fas fa-car category-icon mb-2"></i>
+                        <h6>Transporte</h6>
+                        <small class="text-muted">0.8 tonCO₂e</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="card animate-fade">
+                    <div class="card-body text-center p-3">
+                        <i class="fas fa-utensils category-icon mb-2"></i>
+                        <h6>Alimentación</h6>
+                        <small class="text-muted">0.6 tonCO₂e</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="card animate-fade">
+                    <div class="card-body text-center p-3">
+                        <i class="fas fa-bolt category-icon mb-2"></i>
+                        <h6>Energía</h6>
+                        <small class="text-muted">0.5 tonCO₂e</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="card animate-fade">
+                    <div class="card-body text-center p-3">
+                        <i class="fas fa-shopping-bag category-icon mb-2"></i>
+                        <h6>Consumo</h6>
+                        <small class="text-muted">0.5 tonCO₂e</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección de Recompensas -->
+        <div class="rewards-section animate-fade">
+            <h5 class="mb-3">
+                <i class="fas fa-gift text-amber-600"></i>
+                Objetivos y Recompensas
+            </h5>
+            
+            <!-- Objetivo 1 -->
+            <div class="mb-4">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span>Tarjeta Regalo $20</span>
+                    <span>75%</span>
+                </div>
+                <div class="reward-progress">
+                    <div class="reward-progress-bar" style="width: 75%"></div>
+                    <i class="fas fa-gift reward-icon"></i>
+                </div>
+                <small class="text-muted">Reduce tu huella un 20% más para desbloquear</small>
+            </div>
+
+            <!-- Objetivo 2 -->
+            <div class="mb-4">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span>$50 PayPal</span>
+                    <span>45%</span>
+                </div>
+                <div class="reward-progress">
+                    <div class="reward-progress-bar" style="width: 45%"></div>
+                    <i class="fab fa-paypal reward-icon"></i>
+                </div>
+                <small class="text-muted">Mantén tu reducción por 3 meses</small>
+            </div>
+        </div>
+
+        <!-- Tips Ecológicos -->
+        <h5 class="mt-4 mb-3">Tips del Día</h5>
+        <div class="eco-tip animate-fade">
+            <i class="fas fa-lightbulb text-amber-500"></i>
+            <strong>Ahorro de Energía</strong>
+            <p class="mb-0">Cambia tus bombillas a LED y ahorra hasta un 80% de energía.</p>
+        </div>
+        <div class="eco-tip animate-fade">
+            <i class="fas fa-bicycle text-green-500"></i>
+            <strong>Transporte</strong>
+            <p class="mb-0">Usa la bicicleta para trayectos cortos y reduce tu huella de carbono.</p>
+        </div>
+    </div>
+
+    <!-- Botón Flotante -->
+    <button class="floating-button border-0">
+        <i class="fas fa-plus"></i>
+    </button>
+
+    <!-- Navegación Inferior -->
+    <nav class="bottom-nav">
+        <div class="container">
+            <div class="row py-2">
+                <div class="col nav-item">
+                    <a class="nav-link active" href="index.html">
+                        <i class="fas fa-home"></i>
+                        Inicio
+                    </a>
+                </div>
+                <div class="col nav-item">
+                    <a class="nav-link" href="secciones/estadistica.html">
+                        <i class="fas fa-chart-bar"></i>
+                        Estadísticas
+                    </a>
+                </div>
+                <div class="col nav-item">
+                    <a class="nav-link" href="secciones/retos.html">
+                        <i class="fas fa-leaf"></i>
+                        Retos
+                    </a>
+                </div>
+                <div class="col nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="fas fa-user"></i>
+                        Perfil
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
